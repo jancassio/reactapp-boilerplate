@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Hello, Message } from './components';
+
 const message = "Change this string to see hot reload working.";
 
 ReactDOM.render(
-  (<h1>{message}</h1>),
+  (
+    <div>
+      <Hello/>
+      <Message message={message}/>
+      <Message message={"react is AWESOME!"}/>
+    </div>
+  ),
   document.getElementById('app')
 );
