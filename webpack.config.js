@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const merge   = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Clean = require('clean-webpack-plugin');
+const pkg = require('./package.json');
 
 // target will be defined by npm script action: start or build.
 const TARGET = process.env.npm_lifecycle_event;
@@ -70,4 +72,32 @@ if ( !TARGET || TARGET == 'start' ) {
       new webpack.HotModuleReplacementPlugin()
     ]
   });
+}
+
+if ( TARGET === "build" || TARGET === "stats" ){
+  module.exports = merge(common, {
+    entry: {
+      app: PATHS.app,
+      vendor: Object.keys(pkg.dependencies).filter(function (dependency){
+        // if needed to filter some dependency.
+        return dependency
+      })
+    },
+
+    output: {
+      path: PATHS.build,
+      filename: '[name].[hash].js',
+      chuckFilename: '[chuckhash].js'
+    },
+
+    plugins: [
+      new Clean([PATHS.build]),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify('production')
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        names: ['vendor', 'manifest']
+      })
+    ]
+  })
 }
