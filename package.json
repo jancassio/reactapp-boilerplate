@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --colors --progress"
+    "start": "webpack-dev-server --colors --progress",
+    "stats": "webpack --profile --json > stats.json",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
