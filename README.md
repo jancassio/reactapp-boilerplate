@@ -1,6 +1,30 @@
 # React App Boilerplate
 
-Here is a very simple structure to start react projects using webpack.
+This structure provide a very simple interface to start projects with react (or not). If you don't want to waste your time understanding other react's boilerplate projects, you should consider check out this one.
+
+I did this to save some time creating automated structures for front-end projects, so I did it to be simple, flexible and ready to develop.
+
+# Contents
+
+Checkout the pre-defined features and the incoming features
+
+* [x] [Webpack](https://webpack.github.io)
+* [x] [React](https://facebook.github.io/react/)
+* [x] [Babel](https://babeljs.io/)
+* [x] [Sass](http://sass-lang.com/)
+
+# Features
+
+* [x] ES6 ready
+* [x] Modular based structure
+* [x] Development server
+  * [x] Hot reload
+* [x] Webpack stats
+* [x] Optimize for production
+  * [x] Chunk hashed files
+  * [x] Update only changed chunks
+  * [x] Automatic inject CSS and JS on index
+
 
 # Installing
 
