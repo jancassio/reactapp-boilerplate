@@ -13,9 +13,9 @@ const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join( __dirname, 'app' ),
   assets: {
-    // dir for assets here
+    images: path.join(__dirname, 'app/assets/images'),
   },
-
+  styles: path.join(__dirname, 'app/styles'),
   build: path.join( __dirname, 'build' )
 };
 
@@ -41,13 +41,30 @@ var common = {
         test: /\.js[x]?$/,
         loaders: ['babel'],
         include: PATHS.app
+      },
+      {
+        test: /\.jpe?g$|\.gif$|\.png$|\.svg$/,
+        loader: 'file',
+        context: {
+          './images': 'images'
+        }
+      },
+      {
+        test: /\.svg$|\.woff$|\.ttf$/,
+        loader: 'file',
+        context: {
+          './fonts': 'fonts'
+        }
       }
-
-      // I'll put more loaders here later
     ]
   },
 
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
     new HtmlWebpackPlugin({
       inject: true,
       template: 'app/index.template.html'
@@ -68,18 +85,27 @@ if ( !TARGET || TARGET == 'start' ) {
       port: process.env.PORT
     },
 
+    module: {
+      loaders: [
+        {
+          test: /\.scss$/,
+          loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+          include: PATHS.app
+        },
+      ]
+    },
+
     plugins: [
       new webpack.HotModuleReplacementPlugin()
     ]
   });
 }
 
-if ( TARGET === "build" || TARGET === "stats" ){
+if ( TARGET === 'build' || TARGET === 'stats' ){
   module.exports = merge(common, {
     entry: {
       app: PATHS.app,
       vendor: Object.keys(pkg.dependencies).filter(function (dependency){
-        // if needed to filter some dependency.
         return dependency
       })
     },
@@ -90,11 +116,22 @@ if ( TARGET === "build" || TARGET === "stats" ){
       chuckFilename: '[chuckhash].js'
     },
 
+    module: {
+      loaders: [
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract('style', 'css!sass'),
+          include: PATHS.app
+        },
+      ]
+    },
+
     plugins: [
       new Clean([PATHS.build]),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
+      new ExtractTextPlugin('[name].[contenthash].css'),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']
       })

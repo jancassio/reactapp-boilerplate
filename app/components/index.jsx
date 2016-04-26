@@ -3,4 +3,5 @@
   this improves a little bit the import from other sources.
 */
 
-export { Hello, Message } from './hello';
+export { Hello, Message } from './Hello';
+export { NyanCat } from './NyanCat'
