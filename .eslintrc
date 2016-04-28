@@ -1,32 +1,32 @@
 {
   "parserOptions": {
+    "extends": "eslint:recommended",
     "sourceType": "module",
-  },
-  
-  "ecmaFeatures": {
-    "blockBindings": true,
-    "forOf": true,
-    "jsx": true,
-    "modules": true,
-    "arrowFunctions": true,
-    "classProperties": true,
-    "templateStrings": true,
-    "destructuring": true,
-    "spread": true
-  },
-
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-
-  "rules": {
-    "strict": 0,
-    "no-underscore-dangle": 0,
-    "quotes": [
-      2,
-      "single"
-    ]
+    "ecmaVersion": 6,
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+      "blockBindings": true,
+      "forOf": true,
+      "jsx": true,
+      "modules": true,
+      "arrowFunctions": true,
+      "classProperties": true,
+      "templateStrings": true,
+      "destructuring": true,
+      "spread": true
+    },
+    "env": {
+      "browser": false,
+      "node": true,
+      "es6": true
+    },
+    "rules": {
+      "strict": 0,
+      "no-underscore-dangle": 0,
+      "quotes": [
+        2,
+        "single"
+      ]
+    }
   }
 }
